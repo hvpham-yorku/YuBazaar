@@ -113,10 +113,10 @@
 ---
 
 ### 15. Event Ticket Sales
-**User Story**: As a club member, I want to list and sell event tickets so that other students can easily buy tickets on campus.  
+**User Story**: As a club member, I want to list and advertise event tickets so that other students can easily buy tickets.  
 **Criteria of Satisfaction**:
 - Event tickets can be listed and tagged as “Events.”
-- Buyers can purchase and coordinate pickup.
+- Sellers can embed Eventbrite/Ticketmaster links.
 
 ---
 
