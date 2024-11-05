@@ -53,4 +53,4 @@ For Sprint 0, we are setting up our foundational structure. If you’re interest
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE] file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/shah-krish/yu-bazaar/blob/main/LICENSE) file for details.
