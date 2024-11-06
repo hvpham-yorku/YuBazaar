@@ -18,19 +18,9 @@ Sprint 0 focuses on establishing the foundational elements of the platform. Our 
 
 A unique feature of YU Bazaar is its exclusive focus on York University students, offering features that are missing from popular marketplaces like Facebook Marketplace, Kijiji, and Karrot. By focusing on campus-specific categories, privacy, and a trusted, York-only user base, YU Bazaar differentiates itself from broader platforms.
 
-## Product Backlog Summary
+## Motivation 
 
-The following items in our product backlog will guide development:
-
-1. **User Registration and Verification**
-2. **Login/Logout Functionality**
-3. **Profile Management**
-4. **Item Listing Creation**
-5. **Search and Filtering Options**
-6. **Campus Location Tagging for Transactions**
-7. **Messaging System**
-
-Detailed user stories, acceptance criteria, and prioritization for each of these features are outlined in our product backlog document.
+**YU Bazaar** was created to address the unique needs of York University students by providing a safe, accessible, and on-campus platform for trading items like textbooks, electronics, dorm furniture, and event tickets. Existing platforms lack campus-specific focus, security, and student-centered categories, limiting their usefulness for York students. By fostering a localized and student-only marketplace, YU Bazaar enhances community engagement and provides convenience for campus-related transactions.
 
 ## Project Goals and Differentiation
 
