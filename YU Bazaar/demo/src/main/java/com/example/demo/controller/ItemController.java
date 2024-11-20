@@ -15,12 +15,6 @@ public class ItemController {
     @Autowired
     private ItemRepository itemRepository;
 
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("items", itemRepository.findAll());
-        return "login_page"; // Thymeleaf template name
-    }
-
     @PostMapping("/add-item")
     public String addItem(@RequestParam String name) {
         Item item = new Item();

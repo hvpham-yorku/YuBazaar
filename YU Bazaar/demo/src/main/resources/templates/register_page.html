@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>YU Bazaar - Registration</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f9f9f9;
+    }
+    .registration-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        width: 350px;
+    }
+    .registration-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+    .registration-container input,
+    .registration-container select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f0f0f0;
+    }
+    .registration-container button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #000;
+        color: #fff;
+        cursor: pointer;
+    }
+    .registration-container button:hover {
+        background-color: #444;
+    }
+    .error {
+        color: red;
+        font-size: 12px;
+        margin-top: -10px;
+        margin-bottom: 10px;
+    }
+
+    /* New Styles for the Logo and Text */
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .logo-container img {
+        width: 50px;  /* Adjust logo size */
+        height: auto;
+        margin-right: 10px;  /* Space between logo and text */
+    }
+
+    .logo-container h1 {
+        font-size: 24px; /* Adjust heading size */
+        margin: 0;
+    }
+
+  </style>
+</head>
+<body>
+<div class="registration-container">
+  <!-- Logo and Text Side by Side -->
+  <div class="logo-container">
+    <img src="resources\static\images\YUB_Logo.jpg" alt="YU Bazaar Logo" th:src="@{/images/YUB_Logo.jpg}">
+    <h1>YU Bazaar</h1>
+  </div>
+
+  <!-- Registration Form -->
+  <form th:action="@{/register}" method="post" onsubmit="return validateForm()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+    <div class="error" id="nameError"></div>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="Enter your York email" required>
+    <div class="error" id="emailError"></div>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" placeholder="Enter your age" min="1" required>
+    <div class="error" id="ageError"></div>
+
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" required>
+      <option value="" disabled selected>Select your gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+    <div class="error" id="genderError"></div>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" required>
+    <div class="error" id="dobError"></div>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+    <div class="error" id="passwordError"></div>
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" required>
+    <div class="error" id="confirmPasswordError"></div>
+
+    <button type="submit">Register</button>
+  </form>
+</div>
+
+<script>
+    function validateForm() {
+        let isValid = true;
+
+        // Clear previous error messages
+        document.querySelectorAll('.error').forEach(e => e.textContent = '');
+
+        // Get form values
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const age = document.getElementById('age').value.trim();
+        const gender = document.getElementById('gender').value;
+        const dob = document.getElementById('dob').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Validate Name
+        if (!name) {
+            document.getElementById('nameError').textContent = 'Name is required.';
+            isValid = false;
+        }
+
+        // Validate Email for York domain
+        const yorkDomainPattern = /^[a-zA-Z0-9._-]+@(yorku\.ca|my\.yorku\.ca)$/;
+        if (!email || !yorkDomainPattern.test(email)) {
+            document.getElementById('emailError').textContent = 'Email must be a valid York University email (yorku.ca or my.yorku.ca).';
+            isValid = false;
+        }
+
+        // Validate Age
+        if (!age || isNaN(age) || age <= 0) {
+            document.getElementById('ageError').textContent = 'Please enter a valid age.';
+            isValid = false;
+        }
+
+        // Validate Gender
+        if (!gender) {
+            document.getElementById('genderError').textContent = 'Please select your gender.';
+            isValid = false;
+        }
+
+        // Validate DOB
+        if (!dob) {
+            document.getElementById('dobError').textContent = 'Date of Birth is required.';
+            isValid = false;
+        }
+
+        // Validate Password
+        if (!password || password.length < 6) {
+            document.getElementById('passwordError').textContent = 'Password must be at least 6 characters.';
+            isValid = false;
+        }
+
+        // Validate Confirm Password
+        if (password !== confirmPassword) {
+            document.getElementById('confirmPasswordError').textContent = 'Passwords do not match.';
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>
+</body>
+</html>
