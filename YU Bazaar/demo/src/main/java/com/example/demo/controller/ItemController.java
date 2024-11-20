@@ -18,7 +18,7 @@ public class ItemController {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("items", itemRepository.findAll());
-        return "index"; // Thymeleaf template name
+        return "login_page"; // Thymeleaf template name
     }
 
     @PostMapping("/add-item")
