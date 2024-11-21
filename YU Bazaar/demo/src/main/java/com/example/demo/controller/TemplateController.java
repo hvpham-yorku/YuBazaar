@@ -31,5 +31,9 @@ public class TemplateController {
     public String forgotPassword(){
         return "forgot_password";
     }
+    @GetMapping("/home")
+    public String showHome(){
+        return "home_page";
+    }
 
 }

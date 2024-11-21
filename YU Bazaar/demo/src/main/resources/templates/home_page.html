@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>YU Bazaar</title>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #fff;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header img {
+            height: 40px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        header div {
+            display: flex;
+            gap: 10px;
+        }
+        header button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        header button:hover {
+            background-color: #444;
+        }
+        .search-bar {
+            margin: 20px 0;
+        }
+        .search-bar input {
+            width: 50%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .item {
+            text-align: center;
+        }
+        .item img {
+            width: 100px;
+            height: auto;
+        }
+        .item h3, .item p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+<header>
+  <img src="resources\static\images\YUB_Logo.jpg" alt="YU Bazaar Logo" th:src="@{/images/YUB_Logo.jpg}">
+  <h1>YU Bazaar</h1>
+  <div>
+    <button>Register</button>
+    <button>Login</button>
+  </div>
+</header>
+
+<div class="search-bar">
+  <input type="text" placeholder="Item Name">
+</div>
+
+<div class="item-grid">
+  <div class="item">
+    <img src="keyboard.png" alt="Keyboard" th:src="@{/images/keyboard.png}">
+    <h3>Keyboard</h3>
+    <p>$5.99</p>
+  </div>
+  <div class="item">
+    <img src="mouse.png" alt="Mouse" th:src="@{/images/mouse.png}">
+    <h3>Mouse</h3>
+    <p>$3.99</p>
+  </div>
+  <div class="item">
+    <img src="chair.png" alt="Chair" th:src="@{/images/chair.png}">
+    <h3>Chair</h3>
+    <p>$0.99</p>
+  </div>
+  <div class="item">
+    <img src="guitar.png" alt="Guitar" th:src="@{/images/guitar.png}">
+    <h3>Guitar</h3>
+    <p>$9.99</p>
+  </div>
+</div>
+</body>
+</html>
