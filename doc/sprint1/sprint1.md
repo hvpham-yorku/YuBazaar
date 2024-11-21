@@ -25,10 +25,9 @@
 
 ## **Spikes**
 - **Spikes Identified**:  
-  1. Investigate email verification process for user registration and login.
-  2. Research the best practice for item listing UI/UX for user-friendly navigation.  
-  3. Investigate performance issues for profile management system (especially in case of large data).
-
+  1. Examine the email verification for procedure for user login and registration.
+  2. For easy navigation, look at the best practices for items listing UI/UX
+  3. Examine proflie management system performance problems, particularly when dealing with big amounts of data.
 ---
 
 ## **User Stories for Sprint 1**
@@ -56,11 +55,11 @@
 ## **Tasks Breakdown**
 | **Task**                                             | **Assigned To**     | **Deadline**      | **Status**         |
 |------------------------------------------------------|---------------------|-------------------|--------------------|
-| Implement user registration API                      | Ojas Taneja         | 10 November 2024  | In Progress        |
-| Build user login/logout functionality                | Vedant Godbole      | 12 November 2024  | Not Started        |
-| Create profile management system                     | Krish Shah          | 15 November 2024  | In Progress        |
-| Develop item listing UI/UX                           | Sourav Chandhok     | 18 November 2024  | Not Started        |
-| Test and validate user verification system           | All team members    | 19 November 2024  | Not Started        |
+| Implement user registration API                      | Ojas Taneja         | 10 November 2024  | Completed          |
+| Build user login/logout functionality                | Vedant Godbole      | 12 November 2024  | Completed          |
+| Create profile management system                     | Krish Shah          | 15 November 2024  | Completed          |
+| Develop item listing UI/UX                           | Sourav Chandhok     | 18 November 2024  | Completed          |
+| Test and validate user verification system           | All team members    | 19 November 2024  | Completed          |
 
 ---
 
