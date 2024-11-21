@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.UUID;
 
 @Controller
 @SessionAttributes("userName")
@@ -35,7 +36,6 @@ public class TemplateController {
             model.addAttribute("userName", user.getName());
             return "redirect:/home";
         } else {
-
             model.addAttribute("error", "Invalid email or password");
             return "login_page";
         }
@@ -56,12 +56,13 @@ public class TemplateController {
                                  @RequestParam("confirmPassword") String confirmPassword,
                                  Model model) {
         try {
-
+            // Check if passwords match
             if (!password.equals(confirmPassword)) {
                 model.addAttribute("error", "Passwords do not match");
                 return "register_page";
             }
 
+            // Validate user inputs
             if (name == null || name.isEmpty()) {
                 model.addAttribute("error", "Name is required.");
                 return "register_page";
@@ -82,6 +83,10 @@ public class TemplateController {
                 return "register_page";
             }
 
+            // Generate recovery code
+            String recoveryCode = UUID.randomUUID().toString();  // generates a unique recovery code
+
+            // Create new user
             User user = new User();
             user.setName(name);
             user.setEmail(email);
@@ -89,10 +94,11 @@ public class TemplateController {
             user.setGender(gender);
             user.setDob(dob);
             user.setPassword(password);
+            user.setRecoveryCode(recoveryCode);  // store recovery code in the user
 
-            userRepository.save(user);
+            userRepository.save(user);  // save the user
 
-            return "redirect:/";
+            return "redirect:/";  // redirect to login page
         } catch (Exception e) {
             model.addAttribute("error", "Registration failed: " + e.getMessage());
             e.printStackTrace();
@@ -103,6 +109,37 @@ public class TemplateController {
     @GetMapping("/forgot_password")
     public String forgotPassword() {
         return "forgot_password";
+    }
+
+    @PostMapping("/reset_password")
+    public String resetPassword(@RequestParam("recoveryCode") String recoveryCode,
+                                @RequestParam("newPassword") String newPassword,
+                                @RequestParam("confirmNewPassword") String confirmNewPassword,
+                                Model model) {
+        try {
+            // Check if new passwords match
+            if (!newPassword.equals(confirmNewPassword)) {
+                model.addAttribute("error", "Passwords do not match.");
+                return "forgot_password";
+            }
+
+            // Find the user by recovery code
+            User user = userRepository.findByRecoveryCode(recoveryCode);
+
+            if (user == null) {
+                model.addAttribute("error", "Invalid recovery code.");
+                return "forgot_password";
+            }
+
+            // Update the user's password
+            user.setPassword(newPassword);  // Ensure to hash the password in production
+            userRepository.save(user);  // Save the updated user
+
+            return "redirect:/";  // Redirect to login page after password reset
+        } catch (Exception e) {
+            model.addAttribute("error", "Password reset failed: " + e.getMessage());
+            return "forgot_password";
+        }
     }
 
     @GetMapping("/home")

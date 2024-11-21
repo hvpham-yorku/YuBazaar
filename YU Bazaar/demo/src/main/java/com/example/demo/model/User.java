@@ -39,6 +39,8 @@ public class User {
     @Column(name = "dob", nullable = false)
     private String dob;
 
+    @Column(name = "recovery_code", nullable = true)
+    private String recoveryCode;
 
     public Long getId() {
         return id;
@@ -95,4 +97,13 @@ public class User {
     public void setDob(String dob) {
         this.dob = dob;
     }
+
+    public String getRecoveryCode() {
+        return recoveryCode;
+    }
+
+    public void setRecoveryCode(String recoveryCode) {
+        this.recoveryCode = recoveryCode;
+    }
+
 }
