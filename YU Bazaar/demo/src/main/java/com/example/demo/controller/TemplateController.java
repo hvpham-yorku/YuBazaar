@@ -154,9 +154,9 @@ public class TemplateController {
         }
     }
 
-    @GetMapping("/home")
-    public String showHome() {
-        return "home_page";
+    @GetMapping("/home-page")
+    public String redirectToHome() {
+        return "redirect:/home";
     }
 
     @RequestMapping("/logout")

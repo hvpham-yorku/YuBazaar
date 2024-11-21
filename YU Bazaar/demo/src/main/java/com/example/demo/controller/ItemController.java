@@ -15,11 +15,26 @@ public class ItemController {
     @Autowired
     private ItemRepository itemRepository;
 
+    @GetMapping("/home")
+    public String viewHomePage(Model model) {
+        model.addAttribute("items", itemRepository.findAll());
+        return "home_page";
+    }
+
     @PostMapping("/add-item")
-    public String addItem(@RequestParam String name) {
+    public String addItem(@RequestParam String title,
+                          @RequestParam double price,
+                          @RequestParam String wear,
+                          @RequestParam String location,
+                          @RequestParam String description) {
         Item item = new Item();
-        item.setName(name);
+        item.setTitle(title);
+        item.setPrice(price);
+        item.setWear(wear);
+        item.setLocation(location);
+        item.setDescription(description);
         itemRepository.save(item);
-        return "redirect:/";
+        return "redirect:/home";
     }
 }
+
