@@ -56,11 +56,11 @@
 ## **Tasks Breakdown**
 | **Task**                                             | **Assigned To**     | **Deadline**      | **Status**         |
 |------------------------------------------------------|---------------------|-------------------|--------------------|
-| Implement user registration API                      | Ojas Taneja         | 10 November 2024  | In Progress        |
-| Build user login/logout functionality                | Vedant Godbole      | 12 November 2024  | Not Started        |
-| Create profile management system                     | Krish Shah          | 15 November 2024  | In Progress        |
-| Develop item listing UI/UX                           | Sourav Chandhok     | 18 November 2024  | Not Started        |
-| Test and validate user verification system           | All team members    | 19 November 2024  | Not Started        |
+| Implement user registration API                      | Ojas Taneja         | 10 November 2024  | Completed          |
+| Build user login/logout functionality                | Vedant Godbole      | 12 November 2024  | Completed          |
+| Create profile management system                     | Krish Shah          | 15 November 2024  | Completed          |
+| Develop item listing UI/UX                           | Sourav Chandhok     | 18 November 2024  | Completed          |
+| Test and validate user verification system           | All team members    | 19 November 2024  | Completed          |
 
 ---
 
