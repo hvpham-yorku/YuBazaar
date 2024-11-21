@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.Email.EmailSender;
+import com.example.demo.Email.EmailTemplate;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +47,9 @@ public class TemplateController {
     public String showRegisterPage() {
         return "register_page";
     }
+
+    @Autowired
+    private EmailSender emailSenderService;
 
     @PostMapping("/register")
     public String handleRegister(@RequestParam("name") String name,
@@ -97,6 +102,13 @@ public class TemplateController {
             user.setRecoveryCode(recoveryCode);  // store recovery code in the user
 
             userRepository.save(user);  // save the user
+
+            // Send a confirmation email
+            EmailTemplate template = EmailTemplate.REGISTRATION_SUCCESS;
+            String subject = template.getSubject();
+            String body = template.getBody(name, recoveryCode);
+
+            emailSenderService.sendEmail(email, subject, body);
 
             return "redirect:/";  // redirect to login page
         } catch (Exception e) {
