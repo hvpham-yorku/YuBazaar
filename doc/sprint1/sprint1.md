@@ -25,10 +25,9 @@
 
 ## **Spikes**
 - **Spikes Identified**:  
-  1. Investigate email verification process for user registration and login.
-  2. Research the best practice for item listing UI/UX for user-friendly navigation.  
-  3. Investigate performance issues for profile management system (especially in case of large data).
-
+  1. Examine the email verification for procedure for user login and registration.
+  2. For easy navigation, look at the best practices for items listing UI/UX
+  3. Examine proflie management system performance problems, particularly when dealing with big amounts of data.
 ---
 
 ## **User Stories for Sprint 1**
