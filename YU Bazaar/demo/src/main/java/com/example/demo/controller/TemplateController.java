@@ -97,12 +97,12 @@ public class TemplateController {
             return "register_page";
         }
     }
-    
+
     @GetMapping("/forgot_password")
     public String forgotPassword(){
         return "forgot_password";
     }
-    
+
     @GetMapping("/home")
     public String showHome(){
         return "home_page";
