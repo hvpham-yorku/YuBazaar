@@ -3,58 +3,43 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-import java.time.LocalDate;
-
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Primary key
+    @Column(name = "id")
+    private Long id;
 
     @NotBlank(message = "Name is required.")
-    @Size(max = 100, message = "Name cannot exceed 100 characters.")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @NotBlank(message = "Email is required.")
     @Email(message = "Invalid email format.")
+    @NotBlank(message = "Email is required.")
     @Pattern(regexp = "^[a-zA-Z0-9._-]+@(yorku\\.ca|my\\.yorku\\.ca)$", message = "Email must be a valid York University email (yorku.ca or my.yorku.ca).")
-    @Column(unique = true) // Ensure email uniqueness
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @NotNull(message = "Age is required.")
-    @Column(nullable = false)
-    private Integer age;
-
-    @NotBlank(message = "Gender is required.")
-    private String gender;
-
-    @NotNull(message = "Date of Birth is required.")
-    @Column(nullable = false)
-    private LocalDate dob;
-
+    @Size(min = 6, message = "Password must be at least 6 characters.")
     @NotBlank(message = "Password is required.")
-    @Size(min = 6, message = "Password must be at least 6 characters long.")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    // Constructors
-    public User() {
-    }
+    @Column(name = "age", nullable = false)
+    private Integer age;
 
-    public User(String name, String email, Integer age, String gender, LocalDate dob, String password) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-        this.gender = gender;
-        this.dob = dob;
-        this.password = password;
-    }
+    @Column(name = "gender", nullable = false)
+    private String gender;
 
-    // Getters and Setters
+    @Column(name = "dob", nullable = false)
+    private String dob;
+
+
     public Long getId() {
         return id;
     }
@@ -79,6 +64,14 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Integer getAge() {
         return age;
     }
@@ -95,19 +88,11 @@ public class User {
         this.gender = gender;
     }
 
-    public LocalDate getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(String dob) {
         this.dob = dob;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }
