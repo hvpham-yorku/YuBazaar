@@ -84,22 +84,30 @@
     <h1>YU Bazaar</h1>
   </div>
 
+  <div th:if="${successMsg}">
+    <h3 style="color: green;" th:text="${successMsg}"></h3>
+  </div>
+
+  <div th:if="${errorMsg}">
+    <h3 style="color: red;" th:text="${errorMsg}"></h3>
+  </div>
+
   <!-- Registration Form -->
-  <form th:action="@{/register}" method="post" onsubmit="return validateForm()">
+  <form th:action="@{/register}" th:object="${user}" method="post" onsubmit="return validateForm()">
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+    <input type="text" id="name" th:field="*{name}" placeholder="Enter your full name" required>
     <div class="error" id="nameError"></div>
 
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" placeholder="Enter your York email" required>
+    <input type="email" id="email" th:field="*{email}" placeholder="Enter your York email" required>
     <div class="error" id="emailError"></div>
 
     <label for="age">Age:</label>
-    <input type="number" id="age" name="age" placeholder="Enter your age" min="1" required>
+    <input type="number" id="age" th:field="*{age}" placeholder="Enter your age" min="1" required>
     <div class="error" id="ageError"></div>
 
     <label for="gender">Gender:</label>
-    <select id="gender" name="gender" required>
+    <select id="gender" th:field="*{gender}" required>
       <option value="" disabled selected>Select your gender</option>
       <option value="Male">Male</option>
       <option value="Female">Female</option>
@@ -108,19 +116,20 @@
     <div class="error" id="genderError"></div>
 
     <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required>
+    <input type="date" id="dob" th:field="*{dob}" required>
     <div class="error" id="dobError"></div>
 
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+    <input type="password" id="password" th:field="*{password}" placeholder="Enter your password" required>
     <div class="error" id="passwordError"></div>
 
     <label for="confirmPassword">Confirm Password:</label>
-    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" required>
+    <input type="password" id="confirmPassword" th:field="*{confirmPassword}" placeholder="Re-enter your password" required>
     <div class="error" id="confirmPasswordError"></div>
 
     <button type="submit">Register</button>
   </form>
+
 </div>
 
 <script>
