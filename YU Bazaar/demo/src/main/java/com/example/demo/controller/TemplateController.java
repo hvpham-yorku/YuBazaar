@@ -1,4 +1,6 @@
 package com.example.demo.controller;
+
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -7,8 +9,12 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
 
 @Controller
+@SessionAttributes("userName")
 public class TemplateController {
 
     @Autowired
@@ -26,10 +32,10 @@ public class TemplateController {
         User user = userRepository.findByEmail(email);
 
         if (user != null && user.getPassword().equals(password)) {
-            // Successful login
+            model.addAttribute("userName", user.getName());
             return "redirect:/home";
         } else {
-            // Login failed
+
             model.addAttribute("error", "Invalid email or password");
             return "login_page";
         }
@@ -37,7 +43,7 @@ public class TemplateController {
 
     @GetMapping("/register")
     public String showRegisterPage() {
-        return "register_page"; // Maps to register.html in templates
+        return "register_page";
     }
 
     @PostMapping("/register")
@@ -50,13 +56,12 @@ public class TemplateController {
                                  @RequestParam("confirmPassword") String confirmPassword,
                                  Model model) {
         try {
-            // Check if passwords match
+
             if (!password.equals(confirmPassword)) {
                 model.addAttribute("error", "Passwords do not match");
                 return "register_page";
             }
 
-            // Validate fields
             if (name == null || name.isEmpty()) {
                 model.addAttribute("error", "Name is required.");
                 return "register_page";
@@ -72,40 +77,42 @@ public class TemplateController {
                 return "register_page";
             }
 
-            // Check if email is already in use
             if (userRepository.findByEmail(email) != null) {
                 model.addAttribute("error", "Email is already registered.");
                 return "register_page";
             }
 
-            // Create user object
             User user = new User();
             user.setName(name);
             user.setEmail(email);
             user.setAge(age);
             user.setGender(gender);
             user.setDob(dob);
-            user.setPassword(password); // Consider hashing in a production environment
+            user.setPassword(password);
 
-            // Save to database
             userRepository.save(user);
 
-            return "redirect:/";  // Redirect to login page after successful registration
+            return "redirect:/";
         } catch (Exception e) {
             model.addAttribute("error", "Registration failed: " + e.getMessage());
-            e.printStackTrace(); // You might want to replace this with proper logging
+            e.printStackTrace();
             return "register_page";
         }
     }
 
     @GetMapping("/forgot_password")
-    public String forgotPassword(){
+    public String forgotPassword() {
         return "forgot_password";
     }
 
     @GetMapping("/home")
-    public String showHome(){
+    public String showHome() {
         return "home_page";
     }
 
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 }
