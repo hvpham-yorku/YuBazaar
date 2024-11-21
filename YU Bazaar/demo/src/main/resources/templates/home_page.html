@@ -72,8 +72,10 @@
   <img src="resources\static\images\YUB_Logo.jpg" alt="YU Bazaar Logo" th:src="@{/images/YUB_Logo.jpg}">
   <h1>YU Bazaar</h1>
   <div>
-    <button>Register</button>
-    <button>Login</button>
+    <span th:text="${userName}"></span> <!-- Display user's name -->
+    <form th:action="@{/logout}" method="post">
+      <button type="submit">Logout</button> <!-- Logout button -->
+    </form>
   </div>
 </header>
 
