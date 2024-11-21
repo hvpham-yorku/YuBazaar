@@ -36,5 +36,12 @@ public class ItemController {
         itemRepository.save(item);
         return "redirect:/home";
     }
+
+    @PostMapping("/delete-item")
+    public String deleteItem(@RequestParam Long id) {
+        itemRepository.deleteById(id);
+        return "redirect:/home";
+    }
+
 }
 
