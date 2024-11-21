@@ -68,7 +68,7 @@ public class TemplateController {
                 return "register_page";
             }
 
-            if (email == null || !email.matches("[a-zA-Z0-9._%+-]+@yorku\\.ca")) {
+            if (email == null || !email.matches("[a-zA-Z0-9._%+-]+@(yorku\\.ca|my\\.yorku\\.ca)")) {
                 model.addAttribute("error", "Invalid email format.");
                 return "register_page";
             }
