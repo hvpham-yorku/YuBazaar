@@ -28,6 +28,7 @@ public class TemplateController {
         return "login_page";
     }
 
+    // handles login logic
     @PostMapping("/login")
     public String handleLogin(@RequestParam("email") String email,
                               @RequestParam("password") String password,
