@@ -1,5 +1,6 @@
 package com.example.demo.Email;
 
+
 public enum EmailTemplate {
     REGISTRATION_SUCCESS(
             "Welcome to Yu Bazaar – Registration Successful!",
@@ -28,7 +29,7 @@ public enum EmailTemplate {
         this.subject = subject;
         this.body = body;
     }
-
+// Getters
     public String getSubject() {
         return subject;
     }
