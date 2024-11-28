@@ -41,6 +41,10 @@ public class User {
 
     @Column(name = "recovery_code", nullable = true)
     private String recoveryCode;
+    
+    @Column(name = "is_verified", nullable = false)
+    private boolean isVerified = false; // Default value
+
 
     public Long getId() {
         return id;
@@ -105,5 +109,13 @@ public class User {
     public void setRecoveryCode(String recoveryCode) {
         this.recoveryCode = recoveryCode;
     }
+    
+    public boolean isVerified() {
+        return isVerified;
+    }
 
+    public void setVerified(boolean verified) {
+        this.isVerified = verified;
+    }
+    
 }

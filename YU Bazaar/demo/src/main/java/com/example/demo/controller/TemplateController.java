@@ -100,6 +100,7 @@ public class TemplateController {
             user.setGender(gender);
             user.setDob(dob);
             user.setPassword(password);
+            user.setVerified(false); // Explicitly set 'isVerified' to false
             user.setRecoveryCode(recoveryCode);  // store recovery code in the user
 
             userRepository.save(user);  // save the user
