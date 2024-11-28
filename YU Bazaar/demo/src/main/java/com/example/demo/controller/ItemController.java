@@ -1,5 +1,6 @@
 package com.example.demo.controller;
-
+import java.util.Arrays;
+import java.util.List;
 import com.example.demo.model.Item;
 import com.example.demo.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,20 @@ public class ItemController {
                           @RequestParam double price,
                           @RequestParam String wear,
                           @RequestParam String location,
-                          @RequestParam String description) {
+                          @RequestParam String description,
+                          Model model) {
+        // Validate location
+        List<String> validLocations = Arrays.asList("ACE", "ACW", "AO", "ATK", "BC", "BCSS", "BRG", "BSB", "BU",
+                "CB", "CC", "CFA", "CFT", "CLH", "CMB", "CSQ", "CUB", "DB", "ELC", "FC", "FL", "FRQ", "FTC", "GH",
+                "HC", "HH", "HNE", "HR", "IKB", "K", "KT", "LAS", "LMP", "LSB", "LUM", "MB", "MC", "OC", "PR", "PSE",
+                "R N", "R S", "SAY", "SC", "SCL", "SHR", "SLH", "SSB", "ST", "STC", "STL", "TC Sobeys", "TEL", "TFC",
+                "TM Tait", "TTC", "VC", "VH", "WC", "WOB", "WSC", "YH", "YL");
+
+        if (!validLocations.contains(location)) {
+            model.addAttribute("error", "Invalid location selected.");
+            return "home_page"; // Or another error page
+        }
+
         Item item = new Item();
         item.setTitle(title);
         item.setPrice(price);
@@ -34,6 +48,7 @@ public class ItemController {
         item.setLocation(location);
         item.setDescription(description);
         itemRepository.save(item);
+
         return "redirect:/home";
     }
 

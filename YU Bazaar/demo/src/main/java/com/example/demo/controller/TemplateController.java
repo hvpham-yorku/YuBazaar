@@ -23,15 +23,12 @@ public class TemplateController {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private EmailSender emailSenderService;
-
     @GetMapping("/")
     public String showLoginPage() {
         return "login_page";
     }
 
-    // Handles login logic
+    // handles login logic
     @PostMapping("/login")
     public String handleLogin(@RequestParam("email") String email,
                               @RequestParam("password") String password,
@@ -39,10 +36,6 @@ public class TemplateController {
         User user = userRepository.findByEmail(email);
 
         if (user != null && user.getPassword().equals(password)) {
-            if (!user.isVerified()) {
-                model.addAttribute("error", "Account is not verified. Please check your email.");
-                return "login_page";
-            }
             model.addAttribute("userName", user.getName());
             return "redirect:/home";
         } else {
@@ -55,6 +48,9 @@ public class TemplateController {
     public String showRegisterPage() {
         return "register_page";
     }
+
+    @Autowired
+    private EmailSender emailSenderService;
 
     @PostMapping("/register")
     public String handleRegister(@RequestParam("name") String name,
@@ -93,11 +89,8 @@ public class TemplateController {
                 return "register_page";
             }
 
-            // Generate OTP
-            String otp = generateOTP();
-
             // Generate recovery code
-            String recoveryCode = UUID.randomUUID().toString();  // Generates a unique recovery code
+            String recoveryCode = UUID.randomUUID().toString();  // generates a unique recovery code
 
             // Create new user
             User user = new User();
@@ -107,28 +100,24 @@ public class TemplateController {
             user.setGender(gender);
             user.setDob(dob);
             user.setPassword(password);
-            user.setOtp(otp);                       // Store the generated OTP
-            user.setVerified(false);                // Default to not verified
-            user.setRecoveryCode(recoveryCode);     // Store recovery code in the user
+            user.setVerified(false); // Explicitly set 'isVerified' to false
+            user.setRecoveryCode(recoveryCode);  // store recovery code in the user
 
-            userRepository.save(user);  // Save the user
+            userRepository.save(user);  // save the user
 
-            // Send OTP Email
-            emailSenderService.sendOtpEmail(email, otp);
+            // Send a confirmation email
+            EmailTemplate template = EmailTemplate.REGISTRATION_SUCCESS;
+            String subject = template.getSubject();
+            String body = template.getBody(name, recoveryCode);
 
-            model.addAttribute("success", "Registration successful! Check your email for the OTP to verify your account.");
-            return "redirect:/verify";
+            emailSenderService.sendEmail(email, subject, body);
 
+            return "redirect:/";  // redirect to login page
         } catch (Exception e) {
             model.addAttribute("error", "Registration failed: " + e.getMessage());
             e.printStackTrace();
             return "register_page";
         }
-    }
-
-    private String generateOTP() {
-        int otp = 100000 + (int) (Math.random() * 900000); // Generates a number between 100000 and 999999
-        return String.valueOf(otp);
     }
 
     @GetMapping("/forgot_password")
@@ -165,41 +154,6 @@ public class TemplateController {
             model.addAttribute("error", "Password reset failed: " + e.getMessage());
             return "forgot_password";
         }
-    }
-
-    @PostMapping("/verify")
-    public String verifyOtp(@RequestParam("email") String email,
-                            @RequestParam("otp") String otp,
-                            Model model) {
-        try {
-            User user = userRepository.findByEmail(email);
-
-            if (user == null) {
-                model.addAttribute("error", "User not found.");
-                return "verify_otp"; // Redirect to OTP verification page
-            }
-
-            if (!user.getOtp().equals(otp)) {
-                model.addAttribute("error", "Invalid OTP.");
-                return "verify_otp"; // Redirect to OTP verification page
-            }
-
-            // Mark user as verified
-            user.setVerified(true);
-            user.setOtp(null); // Clear the OTP after verification
-            userRepository.save(user);
-
-            model.addAttribute("success", "Account verified successfully! You can now log in.");
-            return "redirect:/"; // Redirect to login page
-        } catch (Exception e) {
-            model.addAttribute("error", "OTP verification failed: " + e.getMessage());
-            return "verify_otp"; // Redirect to OTP verification page
-        }
-    }
-
-    @GetMapping("/verify")
-    public String showVerifyPage() {
-        return "verify_otp"; // Return the OTP verification template
     }
 
     @GetMapping("/home-page")
