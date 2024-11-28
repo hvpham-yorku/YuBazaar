@@ -1,9 +1,9 @@
-<!-- Register a user -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>YU Bazaar - Registration</title>
   <style>
+    /* Your existing styles */
     body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -55,35 +55,41 @@
         margin-top: -10px;
         margin-bottom: 10px;
     }
+    .success {
+        color: green;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
 
-    /* New Styles for the Logo and Text */
+    /* Logo styles remain the same */
     .logo-container {
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 20px;
     }
-
     .logo-container img {
-        width: 50px;  /* Adjust logo size */
+        width: 50px;
         height: auto;
-        margin-right: 10px;  /* Space between logo and text */
+        margin-right: 10px;
     }
-
     .logo-container h1 {
-        font-size: 24px; /* Adjust heading size */
+        font-size: 24px;
         margin: 0;
     }
-
   </style>
 </head>
 <body>
 <div class="registration-container">
-  <!-- Logo and Text Side by Side -->
+  <!-- Logo -->
   <div class="logo-container">
-    <img src="resources\static\images\YUB_Logo.jpg" alt="YU Bazaar Logo" th:src="@{/images/YUB_Logo.jpg}">
+    <img src="resources/static/images/YUB_Logo.jpg" alt="YU Bazaar Logo" th:src="@{/images/YUB_Logo.jpg}">
     <h1>YU Bazaar</h1>
   </div>
+
+  <!-- Success Message -->
+  <p class="success" th:if="${success}" th:text="${success}"></p>
+  <p class="error" th:if="${error}" th:text="${error}"></p>
 
   <!-- Registration Form -->
   <form th:action="@{/register}" method="post" onsubmit="return validateForm()">

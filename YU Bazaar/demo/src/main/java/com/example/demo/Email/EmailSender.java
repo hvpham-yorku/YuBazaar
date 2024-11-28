@@ -10,6 +10,7 @@ public class EmailSender {
     @Autowired
     private JavaMailSender mailSender;
 
+    //Registration Email
     public void sendEmail(String toEmail,
                           String subject,
                           String body){
@@ -24,5 +25,18 @@ public class EmailSender {
 
         System.out.println("Mail Sent");
 
+    }
+
+    //Verification OTP Email sender
+    public void sendOtpEmail(String toEmail, String otp) {
+        String subject = "Your OTP for YU Bazaar Registration";
+        String body = "Dear User,\n\n"
+                + "Thank you for registering at YU Bazaar. Please use the following OTP to verify your account:\n\n"
+                + otp + "\n\n"
+                + "This OTP is valid for 10 minutes.\n\n"
+                + "Regards,\n"
+                + "YU Bazaar Team";
+
+        sendEmail(toEmail, subject, body);
     }
 }
