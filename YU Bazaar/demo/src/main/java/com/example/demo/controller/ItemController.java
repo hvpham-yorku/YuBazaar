@@ -1,6 +1,10 @@
 package com.example.demo.controller;
 import java.util.Arrays;
 import java.util.List;
+import com.example.demo.Email.EmailSender;
+import com.example.demo.Email.EmailTemplate;
+import com.example.demo.model.Item;
+import com.example.demo.repository.ItemRepository;
 import com.example.demo.model.Item;
 import com.example.demo.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,9 @@ public class ItemController {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private EmailSender emailSender; // Added EmailSender
+    
     @GetMapping("/home")
     public String viewHomePage(Model model) {
         model.addAttribute("items", itemRepository.findAll());
@@ -28,6 +35,7 @@ public class ItemController {
                           @RequestParam String wear,
                           @RequestParam String location,
                           @RequestParam String description,
+                          @RequestParam String sellerEmail,
                           Model model) {
         // Validate location
         List<String> validLocations = Arrays.asList("ACE", "ACW", "AO", "ATK", "BC", "BCSS", "BRG", "BSB", "BU",
@@ -49,6 +57,13 @@ public class ItemController {
         item.setDescription(description);
         itemRepository.save(item);
 
+        EmailTemplate template = EmailTemplate.LISTING_CONFIRMATION;
+        String subject = template.getSubject();
+        String body = template.getBody(title); // Use the item's title in the email body
+        
+        emailSender.sendEmail(sellerEmail, subject, body);
+        model.addAttribute("success", "Item added successfully! A confirmation email has been sent.");
+        
         return "redirect:/home";
     }
 
