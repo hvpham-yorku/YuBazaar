@@ -131,7 +131,13 @@
     <label>Price:</label>
     <input type="number" name="price" step="0.01" required><br>
     <label>Wear:</label>
-    <input type="text" name="wear" required><br>
+    <select name="wear" required>
+      <option value="">-- Select Wear Condition --</option>
+      <option value="new">New</option>
+      <option value="used (like new)">Used (Like New)</option>
+      <option value="used">Used</option>
+      <option value="poor">Poor</option>
+    </select><br>
     <label>Location:</label>
     <select name="location" required>
       <option value="">-- Select Location --</option>
@@ -205,6 +211,7 @@
     <input type="email" name="sellerEmail" required><br>
     <button type="submit">Add Item</button>
   </form>
+
 </div>
 
 <div id="modalBackground"></div>

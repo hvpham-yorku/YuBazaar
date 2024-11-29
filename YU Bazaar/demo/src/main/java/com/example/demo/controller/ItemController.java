@@ -37,6 +37,13 @@ public class ItemController {
                           @RequestParam String description,
                           @RequestParam String sellerEmail,
                           Model model) {
+        // Validate wear options
+        List<String> validWearOptions = Arrays.asList("new", "used (like new)", "used", "poor");
+        if (!validWearOptions.contains(wear)) {
+            model.addAttribute("error", "Invalid wear condition selected.");
+            return "home_page";
+        }
+
         // Validate location
         List<String> validLocations = Arrays.asList("ACE", "ACW", "AO", "ATK", "BC", "BCSS", "BRG", "BSB", "BU",
                 "CB", "CC", "CFA", "CFT", "CLH", "CMB", "CSQ", "CUB", "DB", "ELC", "FC", "FL", "FRQ", "FTC", "GH",
@@ -46,7 +53,7 @@ public class ItemController {
 
         if (!validLocations.contains(location)) {
             model.addAttribute("error", "Invalid location selected.");
-            return "home_page"; // Or another error page
+            return "home_page";
         }
 
         Item item = new Item();
@@ -66,6 +73,7 @@ public class ItemController {
         
         return "redirect:/home";
     }
+
 
     @PostMapping("/delete-item")
     public String deleteItem(@RequestParam Long id) {
