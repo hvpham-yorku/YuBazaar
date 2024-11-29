@@ -45,11 +45,28 @@ public class ItemController {
         }
 
         // Validate location
-        List<String> validLocations = Arrays.asList("ACE", "ACW", "AO", "ATK", "BC", "BCSS", "BRG", "BSB", "BU",
-                "CB", "CC", "CFA", "CFT", "CLH", "CMB", "CSQ", "CUB", "DB", "ELC", "FC", "FL", "FRQ", "FTC", "GH",
-                "HC", "HH", "HNE", "HR", "IKB", "K", "KT", "LAS", "LMP", "LSB", "LUM", "MB", "MC", "OC", "PR", "PSE",
-                "R N", "R S", "SAY", "SC", "SCL", "SHR", "SLH", "SSB", "ST", "STC", "STL", "TC Sobeys", "TEL", "TFC",
-                "TM Tait", "TTC", "VC", "VH", "WC", "WOB", "WSC", "YH", "YL");
+        List<String> validLocations = Arrays.asList(
+                "Accolade Building East", "Accolade Building West", "Archives of Ontario", "Atkinson",
+                "Norman Bethune College", "Bennett Centre for Student Services", "Bergeron Centre for Engineering Excellence",
+                "Behavioural Sciences Building", "Burton Auditorium", "Chemistry Building", "Calumet College",
+                "The Joan & Martin Goldfarb Centre for Fine Arts", "Centre for Film and Theatre", "Curtis Lecture Halls",
+                "Computer Methods Building", "Central Square", "Central Utilities Building", "Dahdaleh Building",
+                "Executive Learning Centre", "Founders College", "Frost Library (Glendon campus)",
+                "Farquharson Life Sciences", "Founders Tennis Court", "Glendon Hall (Glendon campus)",
+                "Lorna R. Marsden Honours Court & Welcome Centre", "Hart House (Osgoode Hall Law School)",
+                "Health, Nursing and Environmental Studies Building", "Hilliard Residence (Glendon campus)",
+                "Ignat Kaneff Building", "Kinsmen Building", "Kaneff Tower", "Lassonde Building", "LA&PS @ IBM Markham",
+                "Life Sciences Building", "Lumbers Building", "Rob and Cheryl McEwen Graduate Study & Research Building",
+                "McLaughlin College", "Off Campus", "Physical Resources Building",
+                "Petrie Science and Engineering Building / Petrie Observatory", "Ross Building - North wing",
+                "Ross Building - South wing", "Seneca @ York", "Stong College", "Scott Library",
+                "Sherman Health Science Research Centre", "Stedman Lecture Halls", "Seymour Schulich Building",
+                "Sheridan College - Trafalgar Campus", "Student Centre", "Steacie Science and Engineering Library",
+                "Tennis Canada", "Technology and Enhanced Learning Building", "Track and Field Centre",
+                "Tait McKenzie Centre", "Tait Tennis Courts", "Vanier College", "Vari Hall", "Winters College",
+                "West Office Building", "William Small Centre", "York Hall (Glendon campus)", "York Lanes"
+        );
+
 
         if (!validLocations.contains(location)) {
             model.addAttribute("error", "Invalid location selected.");
