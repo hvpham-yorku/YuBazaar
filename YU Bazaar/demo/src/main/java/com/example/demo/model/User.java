@@ -41,10 +41,6 @@ public class User {
 
     @Column(name = "recovery_code", nullable = true)
     private String recoveryCode;
-    
-    @Column(name = "is_verified", nullable = false)
-    private boolean isVerified = false; // Default value
-
 
     @Column(name = "otp", nullable = true)
     private String otp;
@@ -131,13 +127,5 @@ public class User {
     public void setRecoveryCode(String recoveryCode) {
         this.recoveryCode = recoveryCode;
     }
-    
-    public boolean isVerified() {
-        return isVerified;
-    }
 
-    public void setVerified(boolean verified) {
-        this.isVerified = verified;
-    }
-    
 }

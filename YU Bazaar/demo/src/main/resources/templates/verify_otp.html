@@ -1,21 +1,107 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Verify OTP</title>
+  <title>YU Bazaar - Verify OTP</title>
+  <style>
+    /* Page styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f9f9f9;
+    }
+    .verify-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        width: 350px;
+    }
+    .verify-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+    .verify-container input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f0f0f0;
+    }
+    .verify-container button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #000;
+        color: #fff;
+        cursor: pointer;
+    }
+    .verify-container button:hover {
+        background-color: #444;
+    }
+    .error {
+        color: red;
+        font-size: 12px;
+        margin-top: -10px;
+        margin-bottom: 10px;
+    }
+    .success {
+        color: green;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    /* Logo styles */
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .logo-container img {
+        width: 50px;
+        height: auto;
+        margin-right: 10px;
+    }
+    .logo-container h1 {
+        font-size: 24px;
+        margin: 0;
+    }
+  </style>
 </head>
 <body>
-<h1>Verify Your Account</h1>
-<form action="/verify" method="post">
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required>
-  <br><br>
-  <label for="otp">OTP:</label>
-  <input type="text" id="otp" name="otp" required>
-  <br><br>
-  <button type="submit">Verify</button>
-</form>
-<p th:if="${error}" th:text="${error}" style="color: red;"></p>
-<p th:if="${success}" th:text="${success}" style="color: green;"></p>
+<div class="verify-container">
+  <!-- Logo -->
+  <div class="logo-container">
+    <img src="resources/static/images/YUB_Logo.jpg" alt="YU Bazaar Logo" th:src="@{/images/YUB_Logo.jpg}">
+    <h1>YU Bazaar</h1>
+  </div>
+
+  <!-- Success and Error Messages -->
+  <p class="success" th:if="${success}" th:text="${success}"></p>
+  <p class="error" th:if="${error}" th:text="${error}"></p>
+
+  <!-- OTP Verification Form -->
+  <form th:action="@{/verify}" method="post">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    <div class="error" th:if="${emailError}" th:text="${emailError}"></div>
+
+    <label for="otp">OTP:</label>
+    <input type="text" id="otp" name="otp" placeholder="Enter your OTP" required>
+    <div class="error" th:if="${otpError}" th:text="${otpError}"></div>
+
+    <button type="submit">Verify</button>
+  </form>
+</div>
 </body>
 </html>
