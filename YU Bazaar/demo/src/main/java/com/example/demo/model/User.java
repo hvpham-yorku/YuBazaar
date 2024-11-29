@@ -41,10 +41,28 @@ public class User {
 
     @Column(name = "recovery_code", nullable = true)
     private String recoveryCode;
-    
-    @Column(name = "is_verified", nullable = false)
-    private boolean isVerified = false; // Default value
 
+    @Column(name = "otp", nullable = true)
+    private String otp;
+
+    @Column(name = "is_verified", nullable = false)
+    private boolean isVerified = false;
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
 
     public Long getId() {
         return id;
@@ -109,13 +127,5 @@ public class User {
     public void setRecoveryCode(String recoveryCode) {
         this.recoveryCode = recoveryCode;
     }
-    
-    public boolean isVerified() {
-        return isVerified;
-    }
 
-    public void setVerified(boolean verified) {
-        this.isVerified = verified;
-    }
-    
 }
