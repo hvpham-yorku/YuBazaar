@@ -20,7 +20,14 @@ public enum EmailTemplate {
                     "Happy shopping and selling!\n" +
                     "The Yu Bazaar Team\n\n" +
                     "Support: yubazaarassistant@gmail.com"
-    );
+    ),
+	LISTING_CONFIRMATION("Your Listing is Live on YU Bazaar!",
+            "Hi,\n\n" +
+            "Your listing titled '%s' has been successfully posted on YU Bazaar.\n\n" +
+            "Thank you for using YU Bazaar! You can now manage your listing from your account dashboard.\n\n" +
+            "Happy selling!\n\n" +
+            "The Yu Bazaar Team");
+	
 
     private final String subject;
     private final String body;

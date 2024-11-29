@@ -1,6 +1,10 @@
 package com.example.demo.controller;
 import java.util.Arrays;
 import java.util.List;
+import com.example.demo.Email.EmailSender;
+import com.example.demo.Email.EmailTemplate;
+import com.example.demo.model.Item;
+import com.example.demo.repository.ItemRepository;
 import com.example.demo.model.Item;
 import com.example.demo.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,9 @@ public class ItemController {
     @Autowired
     private ItemRepository itemRepository;
 
+    @Autowired
+    private EmailSender emailSender; // Added EmailSender
+    
     @GetMapping("/home")
     public String viewHomePage(Model model) {
         model.addAttribute("items", itemRepository.findAll());
@@ -28,7 +35,15 @@ public class ItemController {
                           @RequestParam String wear,
                           @RequestParam String location,
                           @RequestParam String description,
+                          @RequestParam String sellerEmail,
                           Model model) {
+        // Validate wear options
+        List<String> validWearOptions = Arrays.asList("new", "used (like new)", "used", "poor");
+        if (!validWearOptions.contains(wear)) {
+            model.addAttribute("error", "Invalid wear condition selected.");
+            return "home_page";
+        }
+
         // Validate location
         List<String> validLocations = Arrays.asList("ACE", "ACW", "AO", "ATK", "BC", "BCSS", "BRG", "BSB", "BU",
                 "CB", "CC", "CFA", "CFT", "CLH", "CMB", "CSQ", "CUB", "DB", "ELC", "FC", "FL", "FRQ", "FTC", "GH",
@@ -38,7 +53,7 @@ public class ItemController {
 
         if (!validLocations.contains(location)) {
             model.addAttribute("error", "Invalid location selected.");
-            return "home_page"; // Or another error page
+            return "home_page";
         }
 
         Item item = new Item();
@@ -49,8 +64,16 @@ public class ItemController {
         item.setDescription(description);
         itemRepository.save(item);
 
+        EmailTemplate template = EmailTemplate.LISTING_CONFIRMATION;
+        String subject = template.getSubject();
+        String body = template.getBody(title); // Use the item's title in the email body
+        
+        emailSender.sendEmail(sellerEmail, subject, body);
+        model.addAttribute("success", "Item added successfully! A confirmation email has been sent.");
+        
         return "redirect:/home";
     }
+
 
     @PostMapping("/delete-item")
     public String deleteItem(@RequestParam Long id) {
