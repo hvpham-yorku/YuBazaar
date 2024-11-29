@@ -121,6 +121,7 @@ public class TemplateController {
             String subject = template.getSubject();
             String body = template.getBody(name, recoveryCode);
 
+
             emailSenderService.sendEmail(email, subject, body);
 
             model.addAttribute("success", "Registration successful! Check your email for the OTP to verify your account.");
