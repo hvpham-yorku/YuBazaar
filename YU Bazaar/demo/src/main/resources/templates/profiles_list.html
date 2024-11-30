@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>YU Bazaar - Profiles List</title>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .profiles-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .profiles-container h1 {
+            text-align: center;
+            color: #333;
+        }
+        .profiles-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .profiles-container li {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .profiles-container li a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="profiles-container">
+  <h1>All User Profiles</h1>
+  <ul>
+    <li th:each="user : ${users}">
+      <a th:href="@{'/profile/' + ${user.id}}" th:text="${user.name}"></a>
+    </li>
+  </ul>
+</div>
+</body>
+</html>

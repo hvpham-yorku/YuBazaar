@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>YU Bazaar - Profile</title>
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .profile-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .profile-container h1 {
+            text-align: center;
+            color: #333;
+        }
+        .profile-container p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .back-button {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .back-button a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="profile-container">
+  <h1>User Profile</h1>
+  <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+  <p><strong>Age:</strong> <span th:text="${user.age}"></span></p>
+  <p><strong>Gender:</strong> <span th:text="${user.gender}"></span></p>
+  <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+  <div class="back-button">
+    <a th:href="@{/profiles}">Back to Profiles</a>
+  </div>
+</div>
+</body>
+</html>
