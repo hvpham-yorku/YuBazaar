@@ -15,6 +15,7 @@ public class Item {
     private String wear; // Wear condition of the item (e.g., new, used)
     private String location; // Location where the item is available
     private String description; // Detailed description of the item
+    private String sellerEmail; 
 
     // Getters and setters
     public Long getId() {
@@ -64,4 +65,12 @@ public class Item {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    public String getSellerEmail() {
+    	return sellerEmail;
+    }
+    
+    public void setSellerEmail(String sellerEmail) {
+        this.sellerEmail = sellerEmail;
+        }
 }

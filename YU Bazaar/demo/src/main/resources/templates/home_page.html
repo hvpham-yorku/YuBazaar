@@ -18,7 +18,7 @@
             align-items: center;
         }
         header img {
-            height: 40px;
+            height: 40px;	
         }
         header h1 {
             margin: 0;
@@ -103,11 +103,18 @@
 
 <div class="item-grid">
   <div th:each="item : ${items}" class="item">
+  
+  <h3>
+  <a th:href="@{/product/{id}(id=${item.id})}" th:text="${item.title}"></a>
+</h3>
     <h3 th:text="${item.title}"></h3>
     <p><strong>Price:</strong> $<span th:text="${item.price}"></span></p>
     <p><strong>Wear:</strong> <span th:text="${item.wear}"></span></p>
     <p><strong>Location:</strong> <span th:text="${item.location}"></span></p>
     <p><strong>Description:</strong> <span th:text="${item.description}"></span></p>
+    
+        
+        
     <!-- Delete button -->
     <form th:action="@{/delete-item}" method="post" style="display:inline;">
       <input type="hidden" name="id" th:value="${item.id}">
@@ -115,6 +122,55 @@
     </form>
   </div>
 </div>
+
+
+<style>
+  /* Inquiry Container */
+  .inquiry-container {
+      margin-top: 15px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+  }
+  
+  /* Form Group */
+  .form-group {
+      margin-bottom: 10px;
+      text-align: left;
+  }
+  
+  .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+  }
+  
+  /* Inquiry Button */
+  .inquiry-button {
+      display: inline-block;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 14px;
+  }
+  
+  .inquiry-button:hover {
+      background-color: #444;
+  }
+</style>
 
 
 <!-- Add Item Button -->

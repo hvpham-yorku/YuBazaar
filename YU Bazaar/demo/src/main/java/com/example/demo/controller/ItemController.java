@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class ItemController {
 
@@ -29,6 +29,19 @@ public class ItemController {
         return "home_page";
     }
 
+    @GetMapping("/product/{id}")
+    public String viewProductDetails(@PathVariable Long id, Model model) {
+        // Retrieve the item by ID
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid item ID: " + id));
+
+        // Add the item to the model for Thymeleaf
+        model.addAttribute("item", item);
+
+        // Return the product details page
+        return "product_page"; 
+    
+    }
     @PostMapping("/add-item")
     public String addItem(@RequestParam String title,
                           @RequestParam double price,
@@ -79,6 +92,7 @@ public class ItemController {
         item.setWear(wear);
         item.setLocation(location);
         item.setDescription(description);
+        item.setSellerEmail(sellerEmail);
         itemRepository.save(item);
 
         EmailTemplate template = EmailTemplate.LISTING_CONFIRMATION;
@@ -91,6 +105,35 @@ public class ItemController {
         return "redirect:/home";
     }
 
+    @PostMapping("/send-inquiry")
+    public String sendInquiry(@RequestParam Long itemId,
+                              @RequestParam String buyerName,
+                              @RequestParam String buyerEmail,
+                              @RequestParam String message,
+                              Model model) {
+    	
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid item ID"));
+        
+        String sellerEmail = item.getSellerEmail();
+        
+        String subject = "New Inquiry for Your Listing on YU Bazaar";
+        String emailBody = String.format(
+                "Hi,\n\nYou have received a new inquiry for your listing titled '%s'.\n\n" +
+                        "Inquiry Details:\n" +
+                        "Buyer Name: %s\n" +
+                        "Buyer Email: %s\n" +
+                        "Message: %s\n\n" +
+                        "You can contact the buyer directly to follow up.\n\n" +
+                        "Regards,\nYU Bazaar Team",
+                item.getTitle(), buyerName, buyerEmail, message
+        );
+        emailSender.sendEmail(sellerEmail, subject, emailBody);
+        model.addAttribute("success", "Inquiry sent successfully to the seller.");
+        model.addAttribute("item", item); // Ensure item details are passed back to the product page
+    	
+      return "product_page";
+    }
 
     @PostMapping("/delete-item")
     public String deleteItem(@RequestParam Long id) {
