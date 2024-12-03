@@ -15,7 +15,9 @@ public class Item {
     private String wear; // Wear condition of the item (e.g., new, used)
     private String location; // Location where the item is available
     private String description; // Detailed description of the item
-    private String sellerEmail; 
+    private String sellerEmail;
+
+    private String imagePath;
 
     // Getters and setters
     public Long getId() {
@@ -68,6 +70,14 @@ public class Item {
     
     public String getSellerEmail() {
     	return sellerEmail;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
     
     public void setSellerEmail(String sellerEmail) {

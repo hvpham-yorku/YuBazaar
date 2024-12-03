@@ -131,7 +131,7 @@
 
   <!-- Product Image -->
   <div class="product-image">
-    <img src="resources/static/images/YUB_Logo.jpg" alt="Product Image" th:src="@{/images/YUB_Logo.jpg}">
+    <img th:src="@{/uploads/{imageName}(imageName=${item.imagePath})}" alt="Product Image" class="product-image">
   </div>
 
 

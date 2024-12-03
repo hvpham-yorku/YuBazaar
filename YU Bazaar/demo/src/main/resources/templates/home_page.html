@@ -105,23 +105,11 @@
 
 <div class="item-grid">
   <div th:each="item : ${items}" class="item">
-  
-  <h3>
-  <a th:href="@{/product/{id}(id=${item.id})}" th:text="${item.title}"></a>
-</h3>
-    <h3 th:text="${item.title}"></h3>
+    <img th:src="@{/uploads/{filename}(filename=${item.imagePath})}" alt="Item Image" style="width: 100px; height: 100px;">
+    <h3><a th:href="@{/product/{id}(id=${item.id})}" th:text="${item.title}"></a></h3>
     <p><strong>Price:</strong> $<span th:text="${item.price}"></span></p>
     <p><strong>Wear:</strong> <span th:text="${item.wear}"></span></p>
     <p><strong>Location:</strong> <span th:text="${item.location}"></span></p>
-    <p><strong>Description:</strong> <span th:text="${item.description}"></span></p>
-    
-        
-        
-    <!-- Delete button -->
-    <form th:action="@{/delete-item}" method="post" style="display:inline;">
-      <input type="hidden" name="id" th:value="${item.id}">
-      <button type="submit" style="background:none; border:none; color:red; font-size:18px; cursor:pointer;">&times;</button>
-    </form>
   </div>
 </div>
 
@@ -183,7 +171,7 @@
   <div style="text-align: right;">
     <button id="closeModal" style="background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
   </div>
-  <form th:action="@{/add-item}" method="post">
+  <form th:action="@{/add-item}" method="post" enctype="multipart/form-data">
     <label>Title:</label>
     <input type="text" name="title" required><br>
     <label>Price:</label>
@@ -265,10 +253,13 @@
     </select><br>
     <label>Description:</label>
     <textarea name="description" rows="4"></textarea><br>
-    <label>Seller Email:</label> 
+    <label>Seller Email:</label>
     <input type="email" name="sellerEmail" required><br>
+    <label>Image:</label>
+    <input type="file" name="image" accept="image/*" required><br>
     <button type="submit">Add Item</button>
   </form>
+
 
 </div>
 

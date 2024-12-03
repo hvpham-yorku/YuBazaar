@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import com.example.demo.Email.EmailSender;
@@ -14,6 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.multipart.MultipartFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @Controller
 public class ItemController {
 
@@ -49,7 +55,9 @@ public class ItemController {
                           @RequestParam String location,
                           @RequestParam String description,
                           @RequestParam String sellerEmail,
+                          @RequestParam("image") MultipartFile imageFile, // File upload
                           Model model) {
+        try {
         // Validate wear options
         List<String> validWearOptions = Arrays.asList("new", "used (like new)", "used", "poor");
         if (!validWearOptions.contains(wear)) {
@@ -85,26 +93,48 @@ public class ItemController {
             model.addAttribute("error", "Invalid location selected.");
             return "home_page";
         }
+            if (imageFile.isEmpty()) {
+                model.addAttribute("error", "Image upload failed. Please select a valid file.");
+                return "home_page";
+            }
 
-        Item item = new Item();
-        item.setTitle(title);
-        item.setPrice(price);
-        item.setWear(wear);
-        item.setLocation(location);
-        item.setDescription(description);
-        item.setSellerEmail(sellerEmail);
-        itemRepository.save(item);
+            // Ensure upload directory exists
+            String uploadDir = "uploads/";
+            Path uploadPath = Paths.get(uploadDir);
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
 
-        EmailTemplate template = EmailTemplate.LISTING_CONFIRMATION;
-        String subject = template.getSubject();
-        String body = template.getBody(title); // Use the item's title in the email body
-        
-        emailSender.sendEmail(sellerEmail, subject, body);
-        model.addAttribute("success", "Item added successfully! A confirmation email has been sent.");
-        
-        return "redirect:/home";
+            String uniqueFileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
+            String imagePath = "uploads/" + uniqueFileName;
+            Path filePath = uploadPath.resolve(uniqueFileName);
+            Files.copy(imageFile.getInputStream(), filePath);
+
+            // Save item to the database
+            Item item = new Item();
+            item.setTitle(title);
+            item.setPrice(price);
+            item.setWear(wear);
+            item.setLocation(location);
+            item.setDescription(description);
+            item.setSellerEmail(sellerEmail);
+            item.setImagePath(uniqueFileName);
+            itemRepository.save(item);
+
+            // Send confirmation email
+            EmailTemplate template = EmailTemplate.LISTING_CONFIRMATION;
+            String subject = template.getSubject();
+            String body = template.getBody(title);
+            emailSender.sendEmail(sellerEmail, subject, body);
+
+            model.addAttribute("success", "Item added successfully!");
+            return "redirect:/home";
+        } catch (Exception e) {
+            model.addAttribute("error", "Failed to add item: " + e.getMessage());
+            e.printStackTrace(); // Log the error for debugging
+            return "home_page";
+        }
     }
-
     @PostMapping("/send-inquiry")
     public String sendInquiry(@RequestParam Long itemId,
                               @RequestParam String buyerName,
