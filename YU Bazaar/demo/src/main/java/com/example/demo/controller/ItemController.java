@@ -1,20 +1,14 @@
 package com.example.demo.controller;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import com.example.demo.Email.EmailSender;
 import com.example.demo.Email.EmailTemplate;
 import com.example.demo.model.Item;
 import com.example.demo.repository.ItemRepository;
-import com.example.demo.model.Item;
-import com.example.demo.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -170,6 +164,25 @@ public class ItemController {
         itemRepository.deleteById(id);
         return "redirect:/home";
     }
+
+    @GetMapping("/search")
+    public String searchItems(@RequestParam String keyword, Model model) {
+        List<Item> searchResults = itemRepository.searchItems(keyword);
+        model.addAttribute("items", searchResults);
+        model.addAttribute("searchKeyword", keyword); // Pass the keyword back for display
+        return "home_page";
+    }
+
+
+    @GetMapping("/search-suggestions")
+    @ResponseBody
+    public List<String> getSearchSuggestions(@RequestParam String keyword) {
+        return itemRepository.searchItems(keyword)
+                .stream()
+                .map(Item::getTitle) // Return only the titles as suggestions
+                .toList();
+    }
+
 
 }
 
