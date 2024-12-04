@@ -86,6 +86,42 @@
     .item h3, .item p {
         margin: 5px 0;
     }
+    #addItemButton {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        font-size: 24px;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        z-index: 999;
+    }
+    #addItemModal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    #modalBackground {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
   </style>
 </head>
 <body>
@@ -124,6 +160,106 @@
     <p><strong>Location:</strong> <span th:text="${item.location}"></span></p>
   </div>
 </div>
+
+<!-- Add Item Button -->
+<button id="addItemButton">+</button>
+
+<!-- Add Item Modal -->
+<div id="addItemModal">
+  <div style="text-align: right;">
+    <button id="closeModal" style="background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
+  </div>
+  <form th:action="@{/add-item}" method="post" enctype="multipart/form-data">
+    <label>Title:</label>
+    <input type="text" name="title" required><br>
+    <label>Price:</label>
+    <input type="number" name="price" step="0.01" required><br>
+    <label>Wear:</label>
+    <select name="wear" required>
+      <option value="">-- Select Wear Condition --</option>
+      <option value="new">New</option>
+      <option value="used (like new)">Used (Like New)</option>
+      <option value="used">Used</option>
+      <option value="poor">Poor</option>
+    </select><br>
+    <label>Location:</label>
+    <select name="location" required>
+      <option value="">-- Select Location --</option>
+      <option value="Accolade Building East">Accolade Building East</option>
+      <option value="Accolade Building West">Accolade Building West</option>
+      <option value="Archives of Ontario">Archives of Ontario</option>
+      <option value="Atkinson">Atkinson</option>
+      <option value="Norman Bethune College">Norman Bethune College</option>
+      <option value="Bennett Centre for Student Services">Bennett Centre for Student Services</option>
+      <option value="Bergeron Centre for Engineering Excellence">Bergeron Centre for Engineering Excellence</option>
+      <option value="Behavioural Sciences Building">Behavioural Sciences Building</option>
+      <option value="Burton Auditorium">Burton Auditorium</option>
+      <option value="Chemistry Building">Chemistry Building</option>
+      <option value="Calumet College">Calumet College</option>
+      <option value="The Joan & Martin Goldfarb Centre for Fine Arts">The Joan & Martin Goldfarb Centre for Fine Arts</option>
+      <option value="Centre for Film and Theatre">Centre for Film and Theatre</option>
+      <option value="Curtis Lecture Halls">Curtis Lecture Halls</option>
+      <option value="Computer Methods Building">Computer Methods Building</option>
+      <option value="Central Square">Central Square</option>
+      <option value="Central Utilities Building">Central Utilities Building</option>
+      <option value="Dahdaleh Building">Dahdaleh Building</option>
+      <option value="Executive Learning Centre">Executive Learning Centre</option>
+      <option value="Founders College">Founders College</option>
+      <option value="Frost Library (Glendon campus)">Frost Library (Glendon campus)</option>
+      <option value="Farquharson Life Sciences">Farquharson Life Sciences</option>
+      <option value="Founders Tennis Court">Founders Tennis Court</option>
+      <option value="Glendon Hall (Glendon campus)">Glendon Hall (Glendon campus)</option>
+      <option value="Lorna R. Marsden Honours Court & Welcome Centre">Lorna R. Marsden Honours Court & Welcome Centre</option>
+      <option value="Hart House (Osgoode Hall Law School)">Hart House (Osgoode Hall Law School)</option>
+      <option value="Health, Nursing and Environmental Studies Building">Health, Nursing and Environmental Studies Building</option>
+      <option value="Hilliard Residence (Glendon campus)">Hilliard Residence (Glendon campus)</option>
+      <option value="Ignat Kaneff Building">Ignat Kaneff Building</option>
+      <option value="Kinsmen Building">Kinsmen Building</option>
+      <option value="Kaneff Tower">Kaneff Tower</option>
+      <option value="Lassonde Building">Lassonde Building</option>
+      <option value="LA&PS @ IBM Markham">LA&PS @ IBM Markham</option>
+      <option value="Life Sciences Building">Life Sciences Building</option>
+      <option value="Lumbers Building">Lumbers Building</option>
+      <option value="Rob and Cheryl McEwen Graduate Study & Research Building">Rob and Cheryl McEwen Graduate Study & Research Building</option>
+      <option value="McLaughlin College">McLaughlin College</option>
+      <option value="Off Campus">Off Campus</option>
+      <option value="Physical Resources Building">Physical Resources Building</option>
+      <option value="Petrie Science and Engineering Building / Petrie Observatory">Petrie Science and Engineering Building / Petrie Observatory</option>
+      <option value="Ross Building - North wing">Ross Building - North wing</option>
+      <option value="Ross Building - South wing">Ross Building - South wing</option>
+      <option value="Seneca @ York">Seneca @ York</option>
+      <option value="Stong College">Stong College</option>
+      <option value="Scott Library">Scott Library</option>
+      <option value="Sherman Health Science Research Centre">Sherman Health Science Research Centre</option>
+      <option value="Stedman Lecture Halls">Stedman Lecture Halls</option>
+      <option value="Seymour Schulich Building">Seymour Schulich Building</option>
+      <option value="Sheridan College - Trafalgar Campus">Sheridan College - Trafalgar Campus</option>
+      <option value="Student Centre">Student Centre</option>
+      <option value="Steacie Science and Engineering Library">Steacie Science and Engineering Library</option>
+      <option value="Tennis Canada">Tennis Canada</option>
+      <option value="Technology and Enhanced Learning Building">Technology and Enhanced Learning Building</option>
+      <option value="Track and Field Centre">Track and Field Centre</option>
+      <option value="Tait McKenzie Centre">Tait McKenzie Centre</option>
+      <option value="Tait Tennis Courts">Tait Tennis Courts</option>
+      <option value="Vanier College">Vanier College</option>
+      <option value="Vari Hall">Vari Hall</option>
+      <option value="Winters College">Winters College</option>
+      <option value="West Office Building">West Office Building</option>
+      <option value="William Small Centre">William Small Centre</option>
+      <option value="York Hall (Glendon campus)">York Hall (Glendon campus)</option>
+      <option value="York Lanes">York Lanes</option>
+    </select><br>
+    <label>Description:</label>
+    <textarea name="description" rows="4"></textarea><br>
+    <label>Seller Email:</label>
+    <input type="email" name="sellerEmail" required><br>
+    <label>Image:</label>
+    <input type="file" name="image" accept="image/*" required><br>
+    <button type="submit">Add Item</button>
+  </form>
+</div>
+
+<div id="modalBackground"></div>
 
 <script>
   const searchBar = document.getElementById("searchBar");
@@ -169,6 +305,22 @@
       if (!suggestionsList.contains(e.target) && e.target !== searchBar) {
           suggestionsList.style.display = "none";
       }
+  });
+
+  // Modal functionality
+  document.getElementById("addItemButton").addEventListener("click", function () {
+      document.getElementById("addItemModal").style.display = "block";
+      document.getElementById("modalBackground").style.display = "block";
+  });
+
+  document.getElementById("closeModal").addEventListener("click", function () {
+      document.getElementById("addItemModal").style.display = "none";
+      document.getElementById("modalBackground").style.display = "none";
+  });
+
+  document.getElementById("modalBackground").addEventListener("click", function () {
+      document.getElementById("addItemModal").style.display = "none";
+      document.getElementById("modalBackground").style.display = "none";
   });
 </script>
 </body>
