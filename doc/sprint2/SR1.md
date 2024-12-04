@@ -26,10 +26,10 @@
 - **Increase Testing Coverage:** Allocate more time for testing and include automated tests where possible. *(Assigned to: Krish Shah, Deadline: By End of Next Sprint)*
 
 ## Feedback from Participants:
-- **Ojas Taneja:** "The sprint went well overall, but we need to address time management to reduce pressure toward the end."
-- **Vedant Godbole:** 
-- **Krish Shah:** 
-- **Sourav Chandhok:** 
+- **Ojas Taneja:** "The sprint went well overall, but we need to address time management to reduce pressure towards the end."
+- **Vedant Godbole:** "The sprint went as expected but could have planned it in a slightly better way."
+- **Krish Shah:** "Sprint 1 went smoothly, achieving its goals and setting a solid foundation for the next phase."
+- **Sourav Chandhok:** "Sprint 1 was successful, with objectives met and a positive team effort throughout."
 ---
 
 **Note:** All team members actively participated in the discussion and provided valuable insights.
