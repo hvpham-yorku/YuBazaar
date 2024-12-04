@@ -24,7 +24,7 @@ YU Bazaar is dedicated to building a campus-centric marketplace that balances se
 ## Development and Contribution
 
 1. Fork the repository.
-2. Clone your fork locally and set up the development environment following the steps in the [Setup Guide](https://github.com/shah-krish/yu-bazaar/blob/main/Setup.md)
+2. Clone your fork locally and set up the development environment following the steps in the [Setup Guide](https://github.com/hvpham-yorku/YuBazaar/blob/main/Setup.md)
 3. Submit pull requests for any changes.
 
 ## Future Development
